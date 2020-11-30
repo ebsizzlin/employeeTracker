@@ -16,8 +16,8 @@ HTML, JavaScript, Node.js, Inquirer, MySQL
 
 ## Screenshots
 
-not available yet, workbench is down
+not available yet, workbench is down -- will get tutor assitance
 
 ## Walkthrough
 
-not available yet, workbench is down
+not available yet, workbench is down -- will get tutor assitance
