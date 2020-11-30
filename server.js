@@ -155,7 +155,7 @@ addRole = () => {
             var salary = res.salary;
             var department_id = res.department_id;
 
-            var query = 'INSERT INTO role (title, salary, department_id) VALUE ( ? )';
+            var query = 'INSERT INTO role (title, salary, department_id) VALUES ( ? )';
             connection.query(query, (err, res) => {
                 if (err) throw err;
                 console.table(res);
@@ -195,7 +195,7 @@ addEmployee = () => {
             var role_id = res.role_id;
             var manager_id = res.manager_id;
             
-            var query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id VALUE ( ? )';
+            var query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id VALUES ( ? )';
             connection.query(query, (err, res) => {
                 if (err) throw (err);
                 console.table(res);
@@ -204,7 +204,7 @@ addEmployee = () => {
         });
 };
 
-//update employees
+//update employees -- this doesnt feel complete
 updateEmployee = () => {
     var query = 'SELECT id, first_name, last_name, role_id FROM employee';
     connection.query(query, (err, res) => {
