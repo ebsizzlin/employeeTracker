@@ -26,6 +26,7 @@ VALUES
 --employee seed
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
+--tbh i have no clue what the role and manager ids technically connect to i j guessed what it might mean
     ("Macy", "Jones", 1, NULL),
     ("Agustin", "Noguera", 1, NULL),
     ("Molly", "Kusilka", 2, 1),
