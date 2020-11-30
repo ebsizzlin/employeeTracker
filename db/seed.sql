@@ -1,17 +1,17 @@
 USE employees_DB;
 
 --department seed
-INSERT INTO departments
+INSERT INTO department
     (name)
 VALUES
 
 
 --role seed
 INSERT INTO roles
-    (name)
+    (title, salary, department_id)
 VALUES
 
 --employee seed
-INSERT INTO employees
+INSERT INTO employee
     (name)
 VALUES

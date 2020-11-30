@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS employees_DB;
 CREATE DATABASE employees_DB;
 
 --create departments table
-CREATE TABLE departments (
+CREATE TABLE department (
     id INT auto_increment NOT NULL,
     name VARCHAR(30) NOT NULL,
     PRIMARY KEY (id)
@@ -19,7 +19,7 @@ CREATE TABLE roles (
 );
 
 --create employees table
-CREATE TABLE employees (
+CREATE TABLE employee (
     id INT auto_increment NOT NULL,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
