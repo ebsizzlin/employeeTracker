@@ -59,7 +59,7 @@ promptUser = () => {
         });
 };
 
-//ask if user wants to continue -- does this work???
+//ask if user wants to select something else -- does this work???
 anotherChoice = () =>   {
     inquirer
         .prompt([
@@ -80,5 +80,37 @@ anotherChoice = () =>   {
         })
 }
 
+//vew departments
+viewDepartments = () => {
 
-//prompt to end questions and generate
+}
+
+//view roles
+viewRoles = () => {
+
+}
+
+//view employees
+viewEmployees = () => {
+
+}
+
+//add departments
+addDepartment = () => {
+
+}
+
+//add roles
+addRole = () => {
+
+}
+
+//add employees
+addEmployee = () => {
+
+}
+
+//update employees
+updateEmployee = () => {
+
+}
