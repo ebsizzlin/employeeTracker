@@ -22,6 +22,23 @@ connection.connect((err) => {
 promptUser = () => {
     inquirer
         .prompt({
-            
+            type: 'list',
+            name: 'action',
+            message: 'Pick one:',
+            choices: [
+                "View departments",
+                "View roles",
+                "View employees",
+                "Add department",
+                "Add role",
+                "Add employee",
+                "Update Employee",
+                "All done!"
+            ]
         })
+
+        //if and else ifs to go to new functions based off of answer
 }
+
+
+//prompt to end questions and generate
