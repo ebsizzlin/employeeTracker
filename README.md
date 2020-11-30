@@ -2,9 +2,11 @@
 
 ## Description
 
+A Content Management System interface with a self-made databbase in order to manage a company's employees.
+
 ## Tech Used
 
-HTML, JavaScript, Node.js, Express, MySQL
+HTML, JavaScript, Node.js, Inquirer, MySQL
 
 ## Instructions
 
@@ -12,8 +14,10 @@ HTML, JavaScript, Node.js, Express, MySQL
 2. npm install mysql, npm install inquirer, npm install console.table
 3. run node server.js
 
-## Link
-
 ## Screenshots
 
+not available yet, workbench is down
+
 ## Walkthrough
+
+not available yet, workbench is down

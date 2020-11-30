@@ -142,7 +142,7 @@ addRole = () => {
             {
                 type: 'input',
                 name: 'salary',
-                message: 'Salary of new role?'
+                message: 'Salary of role?'
             },
             {
                 type: 'input',
