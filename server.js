@@ -87,7 +87,7 @@ viewDepartments = () => {
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
-        promptUser();
+        anotherChoice();
     })
 }
 
@@ -97,7 +97,7 @@ viewRoles = () => {
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
-        promptUser();
+        anotherChoice();
     })
 }
 
@@ -107,7 +107,7 @@ viewEmployees = () => {
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
-        promptUser();
+        anotherChoice();
     })
 }
 
@@ -155,7 +155,7 @@ addRole = () => {
             var salary = res.salary;
             var department_id = res.department_id;
 
-            var query = 'INSERT INTO role (title, salary, department_id) VALUE( ? )';
+            var query = 'INSERT INTO role (title, salary, department_id) VALUE ( ? )';
             connection.query(query, (err, res) => {
                 if (err) throw err;
                 console.table(res);
@@ -195,7 +195,12 @@ addEmployee = () => {
             var role_id = res.role_id;
             var manager_id = res.manager_id;
             
-            var query = 'INSERT INTO'
+            var query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id VALUE ( ? )';
+            connection.query(query, (err, res) => {
+                if (err) throw (err);
+                console.table(res);
+                anotherChoice();
+            })
         })
 }
 
