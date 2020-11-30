@@ -2,8 +2,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var cTable = require("console.table");
-const { asyncScheduler } = require("rxjs");
-const { allowedNodeEnvironmentFlags } = require("process");
 
 //creating connection info
 const connection = mysql.createConnection({
@@ -60,5 +58,27 @@ promptUser = () => {
             }
         });
 };
+
+//ask if user wants to continue -- does this work???
+anotherChoice = () =>   {
+    inquirer
+        .prompt([
+            {
+                type: 'confirm',
+                name: 'action',
+                message: 'Make another choice?'
+            }
+        ])
+        .then(answer => {
+            if (answer.choice) {
+                promptUser();
+            }
+            else {
+                connection.end();
+                console.log('Success!');
+            }
+        })
+}
+
 
 //prompt to end questions and generate
