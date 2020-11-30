@@ -24,14 +24,12 @@ VALUES
     ("Modeller", 60, 4),
     ("Texture", 60, 4),
     ("Rigging", 60, 4),
-    ("Cloth", 60, 4),
     ("Animator", 60, 5),
-    ("Matte", 60, 5),
     ("Lighting", 70, 5),
     ("Rotoscope", 70, 5),
-    ("FX", 70, 5),
     ("Compositor", 90, 5);
 
 --employee seed
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
+    ("Macy", "Jones", )
