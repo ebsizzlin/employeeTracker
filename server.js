@@ -2,6 +2,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var cTable = require("console.table");
+const { asyncScheduler } = require("rxjs");
 
 //creating connection info
 const connection = mysql.createConnection({
@@ -38,6 +39,16 @@ promptUser = () => {
         })
 
         //if and else ifs to go to new functions based off of answer
+        .then((answer) => {
+            if (answer.action === 'View departments') {
+                viewDepartments();
+            } else if (answer.action === 'View roles') {
+                viewRoles();
+            } else if (answer.action === 'View employees') {
+                viewEmployees();
+            }
+        });
+
 }
 
 
