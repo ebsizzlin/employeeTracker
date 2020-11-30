@@ -155,7 +155,7 @@ addRole = () => {
             var salary = res.salary;
             var department_id = res.department_id;
 
-            var query = 'INSERT INTO role (title, salary, department_id) VALUE("${title}", "${salary}", "${department_id}")';
+            var query = 'INSERT INTO role (title, salary, department_id) VALUE( ? )';
             connection.query(query, (err, res) => {
                 if (err) throw err;
                 console.table(res);
@@ -178,7 +178,25 @@ addEmployee = () => {
                 name: 'last_name',
                 message: "Employee's last name?"
             },
+            {
+                type: 'input',
+                name: 'role_id',
+                message: "Employee's role ID?"
+            },
+            {
+                type: 'input',
+                name: 'manager_id',
+                message: "Employee's manager ID?"
+            }
         ])
+        .then((res) => {
+            var first_name = res.first_name;
+            var last_name = res.last_name;
+            var role_id = res.role_id;
+            var manager_id = res.manager_id;
+            
+            var query = 'INSERT INTO'
+        })
 }
 
 //update employees
