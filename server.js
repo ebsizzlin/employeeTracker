@@ -79,7 +79,7 @@ anotherChoice = () =>   {
                 console.log('Success!');
             };
         });
-}
+};
 
 //vew departments
 viewDepartments = () => {
@@ -88,8 +88,8 @@ viewDepartments = () => {
         if (err) throw err;
         console.table(res);
         anotherChoice();
-    })
-}
+    });
+};
 
 //view roles
 viewRoles = () => {
@@ -98,8 +98,8 @@ viewRoles = () => {
         if (err) throw err;
         console.table(res);
         anotherChoice();
-    })
-}
+    });
+};
 
 //view employees
 viewEmployees = () => {
@@ -108,8 +108,8 @@ viewEmployees = () => {
         if (err) throw err;
         console.table(res);
         anotherChoice();
-    })
-}
+    });
+};
 
 //add departments
 addDepartment = () => {
@@ -128,7 +128,7 @@ addDepartment = () => {
                 anotherChoice();
             });
         });
-}
+};
 
 //add roles
 addRole = () => {
@@ -160,9 +160,9 @@ addRole = () => {
                 if (err) throw err;
                 console.table(res);
                 anotherChoice();
-            })
+            });
         });
-}
+};
 
 //add employees
 addEmployee = () => {
@@ -200,11 +200,23 @@ addEmployee = () => {
                 if (err) throw (err);
                 console.table(res);
                 anotherChoice();
-            })
-        })
-}
+            });
+        });
+};
 
 //update employees
 updateEmployee = () => {
-
-}
+    var query = 'SELECT id, first_name, last_name, role_id FROM employee';
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        {
+            inquirer
+                .prompt({
+                    type: 'input',
+                    name: 'employee',
+                    message: 'Updating which employee #?'
+                });
+        };
+    });
+};
