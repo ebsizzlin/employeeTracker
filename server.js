@@ -82,17 +82,32 @@ anotherChoice = () =>   {
 
 //vew departments
 viewDepartments = () => {
-
+    var query = "SELECT * FROM department";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        promptUser();
+    })
 }
 
 //view roles
 viewRoles = () => {
-
+    var query = "SELECT * FROM roles";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        promptUser();
+    })
 }
 
 //view employees
 viewEmployees = () => {
-
+    var query = "SELECT * FROM employee";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        promptUser();
+    })
 }
 
 //add departments
