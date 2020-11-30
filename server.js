@@ -3,6 +3,7 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var cTable = require("console.table");
 const { asyncScheduler } = require("rxjs");
+const { allowedNodeEnvironmentFlags } = require("process");
 
 //creating connection info
 const connection = mysql.createConnection({
@@ -46,10 +47,18 @@ promptUser = () => {
                 viewRoles();
             } else if (answer.action === 'View employees') {
                 viewEmployees();
+            } else if (answer.action === 'Add department') {
+                addDepartment();
+            } else if (answer.action === 'Add role') {
+                addRole();
+            } else if (answer.action === 'Add employee') {
+                addEmployee();
+            } else if (answer.action === 'Update Employee') {
+                updateEmployee();
+            } else if (answer.action === 'All done!') {
+                connection.end();
             }
         });
-
-}
-
+};
 
 //prompt to end questions and generate
