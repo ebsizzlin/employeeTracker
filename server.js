@@ -1,7 +1,7 @@
 //requiring
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var cTable = require("console.table");
+var consoleTable = require("console.table");
 const { join } = require("path");
 
 //creating connection info
