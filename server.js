@@ -241,17 +241,31 @@ addEmployee = () => {
 
 //update employees -- this doesnt feel complete
 updateEmployee = () => {
-    var query = 'SELECT id, first_name, last_name, role_id FROM employee';
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.table(res);
-        {
-            inquirer
-                .prompt({
-                    type: 'input',
-                    name: 'employee',
-                    message: 'Updating which employee #?'
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'employee',
+                message: 'Updating which employee?'
+            },
+            {
+                type: 'input',
+                name: 'employeeRole',
+                message: 'Update to what?'
+            }
+        ])
+        .then((answer) => {
+            connection.query("UPDATE employee SET role_id=? WHERE first_name=?", [answer.employee, answer.employeeRole],
+                (err, res) => {
+                    if (err) throw err;
+                    console.table(res);
+                    anotherChoice();
                 });
-        };
-    });
+        });
+        
+    // var query = 'SELECT id, first_name, last_name, role_id FROM employee';
+    // connection.query(query, (err, res) => {
+    //     if (err) throw err;
+    //     console.table(res);
+    // });
 };
