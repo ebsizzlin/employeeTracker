@@ -2,6 +2,8 @@
 DROP DATABASE IF EXISTS employees_DB;
 CREATE DATABASE employees_DB;
 
+USE employees_DB;
+
 --create departments table
 CREATE TABLE department (
     id INT auto_increment NOT NULL,
@@ -14,7 +16,7 @@ CREATE TABLE roles (
     id INT auto_increment NOT NULL,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(8,2) NOT NULL,
-    department_id INT NOT NULL
+    department_id INT NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -24,6 +26,6 @@ CREATE TABLE employee (
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     role_id INT,
-    manager_id INT NULL
+    manager_id INT NULL,
     PRIMARY KEY (id)
 );

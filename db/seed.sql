@@ -41,4 +41,4 @@ VALUES
     ("Alex", "Smith", 8, 8),
     ("Katherine", "Trott", 9, 8),
     ("Bharat", "Modi", 9, 8),
-    ("Jaren", "Hubal", 10, 8),
+    ("Jaren", "Hubal", 10, 8)
