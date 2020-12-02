@@ -130,6 +130,7 @@ addDepartment = () => {
             connection.query("INSERT INTO department (department) VALUES (?) ", [answer.name],
                 (err, res) => {
                     if (err) throw err;
+                    console.table(res);
                     console.log("Department added!");
                     anotherChoice();
                 });
@@ -165,9 +166,10 @@ addRole = () => {
         ])
         .then((answer) => {
             //could i use jquery here?
-            connection.query("INSERT INTO role (title, salary, department_id) VALUES (?) ", [answer.title, answer.salary, answer.department_id],
+            connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?) ", [answer.title, answer.salary, answer.department_id],
                 (err, res) => {
                     if (err) throw err;
+                    console.table(res);
                     console.log("Role added!");
                     anotherChoice();
                 });
@@ -214,9 +216,10 @@ addEmployee = () => {
         ])
         .then((answer) => {
             //could i use jquery here?
-            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)", [answer.first_name, answer.last_name, answer.role_id, answer.manager_id],
+            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.first_name, answer.last_name, answer.role_id, answer.manager_id],
                 (err, res) => {
                     if (err) throw err;
+                    console.table(res);
                     console.log("Employee added!");
                     anotherChoice();
                 });
