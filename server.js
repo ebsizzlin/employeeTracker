@@ -118,19 +118,28 @@ viewEmployees = () => {
 //add departments
 addDepartment = () => {
     inquirer
-        .prompt({
-            type: 'input',
-            name: 'department',
-            message: 'Name of the department?'
-        })
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Name of the department?'
+            }
+        ])
         .then((answer) => {
-            var query = "INSERT INTO department (name) VALUES ( ? )";
-            connection.query(query, (err, res) => {
-                console.log('Department added!')
-                if (err) throw (err);
-                console.table(res);
-                anotherChoice();
-            });
+            //could i use jquery here?
+            connection.query("INSERT INTO department (department) VALUES (?) ", [answer.name],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Department added!");
+                    anotherChoice();
+                });
+                
+            // connection.query(query, (err, res) => {
+            //     console.log('Department added!')
+            //     if (err) throw (err);
+            //     console.table(res);
+            //     anotherChoice();
+            // });
         });
 };
 
@@ -154,17 +163,27 @@ addRole = () => {
                 message: 'Department ID for role?',
             }
         ])
-        .then((res) => {
-            var title = res.title;
-            var salary = res.salary;
-            var department_id = res.department_id;
-
-            var query = 'INSERT INTO role (title, salary, department_id) VALUES ( ? )';
-            connection.query(query, (err, res) => {
-                if (err) throw err;
-                console.table(res);
-                anotherChoice();
-            });
+        .then((answer) => {
+            //could i use jquery here?
+            connection.query("INSERT INTO role (title, salary, department_id) VALUES (?) ", [answer.title, answer.salary, answer.department_id],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Role added!");
+                    anotherChoice();
+                });
+                
+                // (res) => {
+                    // var title = res.title;
+                    // var salary = res.salary;
+                    // var department_id = res.department_id;
+                    
+                    // var query = 'INSERT INTO role (title, salary, department_id) VALUES ( ? )';
+                    // connection.query(query, (err, res) => {
+                        //     if (err) throw err;
+                        //     console.table(res);
+                        //     anotherChoice();
+                        // });
+                        // });
         });
 };
 
@@ -193,18 +212,27 @@ addEmployee = () => {
                 message: "Employee's manager ID?"
             }
         ])
-        .then((res) => {
-            var first_name = res.first_name;
-            var last_name = res.last_name;
-            var role_id = res.role_id;
-            var manager_id = res.manager_id;
+        .then((answer) => {
+            //could i use jquery here?
+            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)", [answer.first_name, answer.last_name, answer.role_id, answer.manager_id],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Employee added!");
+                    anotherChoice();
+                });
+
+            // (res) => {
+            // var first_name = res.first_name;
+            // var last_name = res.last_name;
+            // var role_id = res.role_id;
+            // var manager_id = res.manager_id;
             
-            var query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id VALUES ( ? )';
-            connection.query(query, (err, res) => {
-                if (err) throw (err);
-                console.table(res);
-                anotherChoice();
-            });
+            // var query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id VALUES ( ? )';
+            // connection.query(query, (err, res) => {
+            //     if (err) throw (err);
+            //     console.table(res);
+            //     anotherChoice();
+            // });
         });
 };
 
