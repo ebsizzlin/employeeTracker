@@ -246,23 +246,26 @@ updateEmployee = () => {
             {
                 type: 'input',
                 name: 'employee',
-                message: 'Updating which employee?'
+                message: 'Updating which employee?',
+                choices: viewEmployees
             },
             {
                 type: 'input',
                 name: 'employeeRole',
-                message: 'Update to what?'
+                message: 'Update to what?',
+                choices: viewRoles
             }
         ])
         .then((answer) => {
-            connection.query("UPDATE employee SET role_id=? WHERE first_name=?", [answer.employee, answer.employeeRole],
+            //new role id moves to first name location
+            connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.employee, answer.employeeRole],
                 (err, res) => {
                     if (err) throw err;
                     console.table(res);
                     anotherChoice();
                 });
         });
-        
+
     // var query = 'SELECT id, first_name, last_name, role_id FROM employee';
     // connection.query(query, (err, res) => {
     //     if (err) throw err;
