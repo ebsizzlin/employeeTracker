@@ -111,6 +111,10 @@ viewEmployees = () => {
     });
 };
 
+// ==============
+// currently under the assumption that my .then operations don't work, will likely have correct update after 12/4 tutoring session
+// ==============
+
 //add departments
 addDepartment = () => {
     inquirer
