@@ -16,8 +16,8 @@ HTML, JavaScript, Node.js, Inquirer, MySQL
 
 ## Screenshots
 
-not available yet, workbench is down -- will get tutor assistance
+![image](https://user-images.githubusercontent.com/70185995/101116274-c6c23800-35b2-11eb-9dcb-5587c5fd519a.png)
 
 ## Walkthrough
 
-not available yet, workbench is down -- will get tutor assistance
+https://drive.google.com/file/d/1BARcLsHYdv7GaSkjPpA_NEHjUMEdjtbv/view?usp=sharing

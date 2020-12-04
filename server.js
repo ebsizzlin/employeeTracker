@@ -40,21 +40,21 @@ promptUser = () => {
 
         //if and else ifs to go to new functions based off of answer
         .then((answer) => {
-            if (answer.action === 'View departments') {
+            if (answer.choice === 'View departments') {
                 viewDepartments();
-            } else if (answer.action === 'View roles') {
+            } else if (answer.choice === 'View roles') {
                 viewRoles();
-            } else if (answer.action === 'View employees') {
+            } else if (answer.choice === 'View employees') {
                 viewEmployees();
-            } else if (answer.action === 'Add department') {
+            } else if (answer.choice === 'Add department') {
                 addDepartment();
-            } else if (answer.action === 'Add role') {
+            } else if (answer.choice === 'Add role') {
                 addRole();
-            } else if (answer.action === 'Add employee') {
+            } else if (answer.choice === 'Add employee') {
                 addEmployee();
-            } else if (answer.action === 'Update Employee') {
+            } else if (answer.choice === 'Update Employee') {
                 updateEmployee();
-            } else if (answer.action === 'All done!') {
+            } else if (answer.choice === 'All done!') {
                 connection.end();
             }
         });
@@ -66,7 +66,7 @@ anotherChoice = () =>   {
         .prompt([
             {
                 type: 'confirm',
-                name: 'action',
+                name: 'choice',
                 message: 'Make another choice?'
             }
         ])

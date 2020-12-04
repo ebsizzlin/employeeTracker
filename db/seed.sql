@@ -1,6 +1,6 @@
 USE employees_DB;
 
---department seed
+-- department seed
 INSERT INTO department (name)
 VALUES
     ("Production"),
@@ -9,7 +9,7 @@ VALUES
     ("Asset Artist"),
     ("Shot Artist");
 
---role seed
+-- role seed
 INSERT INTO roles (title, salary, department_id)
 VALUES
     ("Line Producer", 90, 1),
@@ -23,10 +23,10 @@ VALUES
     ("Animator", 60, 5),
     ("Compositor", 90, 5);
 
---employee seed
+-- employee seed
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
---tbh i have no clue what the role and manager ids technically connect to i j guessed what it might mean
+-- tbh i have no clue what the role and manager ids technically connect to i j guessed what it might mean
     ("Macy", "Jones", 1, NULL),
     ("Agustin", "Noguera", 1, NULL),
     ("Molly", "Kusilka", 2, 1),
