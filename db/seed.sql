@@ -30,7 +30,7 @@ VALUES
     ("Macy", "Jones", 1, NULL),
     ("Agustin", "Noguera", 1, NULL),
     ("Molly", "Kusilka", 2, 1),
-    ("Eve", "Golegruz", 2, 1),
+    ("Eve", "Golecruz", 2, 1),
     ("Amber", "Collins", 3, NULL),
     ("Mary Margaret", "Gill", 3, 5),
     ("Dikenna", "Ogbo", 4, 5),
