@@ -246,14 +246,14 @@ updateEmployee = () => {
             {
                 type: 'input',
                 name: 'employee',
-                message: 'Updating which employee?',
-                choices: viewEmployees
+                message: 'Updating which employee?'
+                // choices: viewEmployees
             },
             {
                 type: 'input',
                 name: 'employeeRole',
-                message: 'Update to what?',
-                choices: viewRoles
+                message: 'Update to what?'
+                // choices: viewRoles
             }
         ])
         .then((answer) => {
