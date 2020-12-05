@@ -29,7 +29,7 @@ promptUser = () => {
     inquirer
         .prompt({
             type: 'list',
-            name: 'action',
+            name: 'choice',
             message: 'Pick one:',
             choices: [
                 "View departments",
@@ -39,6 +39,9 @@ promptUser = () => {
                 "Add role",
                 "Add employee",
                 "Update employee role",
+                "Delete department",
+                "Delete role",
+                "Delete employee",
                 "All done!"
             ]
         })
@@ -58,6 +61,12 @@ promptUser = () => {
                 addEmployee();
             } else if (answer.choice === 'Update employee role') {
                 updateEmployee();
+            } else if (answer.choice === 'Delete department') {
+                deleteDepartment();
+            } else if (answer.choice === 'Delete role') {
+                deleteRole();
+            } else if (answer.choice === 'Delete employee') {
+                deleteEmployee();
             } else if (answer.choice === 'All done!') {
                 console.log("That's a wrap!");
                 connection.end();
@@ -135,6 +144,13 @@ addDepartment = () => {
                     console.table("Department added!");
                     anotherChoice();
                 });
+
+            //quit error
+            connection.query("SELECT * FROM department", (err, res) => {
+                if (err) throw err;
+                console.table("All departments: ", res);
+                anotherChoice();
+            });
         });
 };
 
@@ -169,7 +185,14 @@ addRole = () => {
                     console.log("Role added!");
                     anotherChoice();
                 });
-        });
+
+            //quit error
+            connection.query("SELECT * FROM roles", (err, res) => {
+                if (err) throw err;
+                console.table("All roles: ", res);
+                anotherChoice();
+            });
+    });
 };
 
 //add employees
@@ -206,14 +229,136 @@ addEmployee = () => {
                     console.table(res);
                     anotherChoice()
                 });
+
+                //quit error
+                connection.query("SELECT * FROM employee", (err, res) => {
+                    if (err) throw err;
+                    console.table("All employees: ", res);
+                    anotherChoice();
+                });
             });
 };
 
 //delete department
+deleteDepartment = () => {
+    connection.query("SELECT * FROM department", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: "Department ID to delete?"
+                    //choices cycle?
+                }
+            ])
+            .then((res) => {
+                var selectedDepartment = res.name;
+                console.log(selectedDepartment);
+                
+                connection.query("DELETE FROM department WHERE ?",
+                    [
+                        {
+                            id: selectedDepartment
+                        }
+                    ])
+
+                    console.log("Department deleted!");
+
+                    connection.query("SELECT * FROM department", (err, res) => {
+                        if (err) throw err;
+                        console.table("All departments: ", res);
+                        anotherChoice();
+                    });
+            });
+    });
+};
 
 //delete roles
+deleteRole = () => {
+    connection.query("SELECT * FROM roles", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: "Role ID to delete?"
+                    //choices cycle?
+                }
+            ])
+            .then((res) => {
+                var selectedRole = res.name;
+                console.log(selectedRole);
+
+                connection.query("DELETE FROM roles WHERE ?",
+                    [
+                        {
+                            id: selectedRole
+                        }
+                    ])
+
+                    console.log("Role deleted!");
+
+                    connection.query("SELECT * FROM roles", (err, res) => {
+                        if (err) throw err;
+                        console.table("All roles: ", res);
+                        anotherChoice();
+                    });
+            });
+    });
+};
 
 //delete employee
+deleteEmployee = () => {
+    connection.query("SELECT * FROM employee", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: "Employee ID to delete?"
+                    //choices cycle?
+                }
+            ])
+            .then((res) => {
+                var selectedEmployee = res.name;
+                console.log(selectedEmployee);
+
+                connection.query("DELETE FROM employee WHERE ?",
+                    [
+                        {
+                            id: selectedEmployee
+                        }
+                    ])
+
+                    console.log("Employee deleted!");
+                    
+                    connection.query("ALTER TABLE employee DROP id", (err, res) => {
+                        if (err) throw err;
+                    });
+                    connection.query("ALTER TABLE employee AUTO_INCREMENT =1", (err, res) => {
+                        if (err) throw err;
+                    });
+                    connection.query("ALTER TABLE employee ADD id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST", (err, res) => {
+                        if (err) throw err;
+                    });
+
+                    connection.query("SELECT * FROM employee", (err, res) => {
+                        if (err) throw err;
+                        console.table("All employees: ", res);
+                        anotherChoice();
+                    });
+            });
+    });
+};
 
 //update employees -- this is just changing role_id to null
 updateEmployee = () => {
@@ -240,6 +385,13 @@ updateEmployee = () => {
                     console.table(data);
                     anotherChoice();
                 });
+            
+            //quit error
+            connection.query("SELECT * FROM employee", (err, res) => {
+                if (err) throw err;
+                console.table("All employees: ", res);
+                anotherChoice();
+            })
         });
 };
 
