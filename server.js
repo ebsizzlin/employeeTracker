@@ -203,6 +203,12 @@ addEmployee = () => {
             });
 };
 
+//delete department
+
+//delete roles
+
+//delete employee
+
 //update employees -- this is just changing role_id to null
 updateEmployee = () => {
     inquirer
