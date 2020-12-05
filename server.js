@@ -152,6 +152,8 @@ addRole = () => {
                 type: 'number',
                 name: 'department_id',
                 message: 'Department ID?',
+                //choices cycle?
+
             }
         ])
         .then((res) => {
@@ -168,9 +170,6 @@ addRole = () => {
 
 //add employees
 addEmployee = () => {
-    connection.query('SELECT * FROM roles', (err, res) => {
-        if (err) throw err;
-
         inquirer
             .prompt([
                 {
@@ -184,72 +183,26 @@ addEmployee = () => {
                     message: "Employee's last name?"
                 },
                 {
-                    type: 'list',
+                    type: 'input',
                     name: 'role_id',
                     message: "Employee's role ID?",
-                    choices: () => {
-                        arrayRole = [];
-                        res.map(res => {
-                            arrayRole.push(
-                                res.title
-                            );
-                        })
-                        return arrayRole;
-                    }
+                    //choices cycle?
                 },
-            ])
-            .then((answer) => {
-                var role = answer.role;
-                connection.query("SELECT * FROM role", (err, res) => {
-                    if (err) throw (err);
-                    var roleFilter = res.filter((res) => {
-                        return res.title == role;
-                    })
-                    var roldId = roleFilter[0].id;
-                    connection.query("SELECT * FROM employee", (err, res) => {
-                        inquirer
-                            .prompt([
-                                {
-                                    type: 'list',
-                                    name: 'manager_id',
-                                    message: "Which manager?",
-                                    choices: () => {
-                                        arrayManager = []
-                                        res.map(res => {
-                                            arrayManager.push(
-                                                res.last_name
-                                            )
-                                        })
-                                        return arrayManager;
-                                    }
-                                }
-                            ])
-                            .then((answerManager => {
-                                var manager = answerManager.manager;
-                                connection.query("SELECT * FROM employee", (err, res) => {
-                                    if (err) throw (err);
-                                    var managerFilter = res.filter((res) => {
-                                        return res.last_name == manager;
-                                    })
-                                    var managerId = managerFilter[0].id;
-                                    
-                                    var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
-                                    var values = [answer.first_name, answer.last_name, role_id, manager_id]
+                {
+                    type: 'input',
+                    name: 'manager_id',
+                    message: "Manager's ID?"
+                    //choices cycle?
 
-                                    connection.query(query, values, (err, res, fields) => {
-                                        console.log('Employee added: ${(values[0]).toUpperCase()}.')
-                                    })
-                                })
-                            }))
-                    })
-                },
-                (err) => {
+                }
+            ])
+            .then((res) => {
+                connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [res.first_name, res.last_name, res.role_id, res.manager_id], (err, data) => {
                     if (err) throw err;
-                    console.log("Employee added!");
-                    anotherChoice();
+                    console.table(res);
+                    anotherChoice()
                 });
             });
-    });
 };
 
 //update employees -- this doesnt feel complete
@@ -259,8 +212,16 @@ updateEmployee = () => {
             {
                 type: 'input',
                 name: 'first_name',
-                message: "Updating which employee's role?"
-                // choices: viewEmployees
+                message: "Updating which employee's role?",
+                choices: () => {
+                    arrayEmployee = [];
+                    res.map(res => {
+                        arrayEmployee.push(
+                            res.title
+                        );
+                    })
+                    return arrayEmployee;
+                }
             },
             {
                 type: 'number',
