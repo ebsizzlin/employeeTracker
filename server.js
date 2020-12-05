@@ -2,6 +2,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var consoleTable = require("console.table");
+var figlet = require("figlet");
 
 //creating connection info
 const connection = mysql.createConnection({
@@ -20,10 +21,15 @@ connection.connect((err) => {
 
 //function to prompt user
 promptUser = () => {
+    //where to add the figlet?
+    // figlet('Employee Tracker', (err, result) => {
+    //     console.log(err || result);
+    // });
+
     inquirer
         .prompt({
             type: 'list',
-            name: 'choice',
+            name: 'action',
             message: 'Pick one:',
             choices: [
                 "View departments",
