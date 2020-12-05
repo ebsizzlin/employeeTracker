@@ -254,32 +254,27 @@ addEmployee = () => {
 
 //update employees -- this doesnt feel complete
 updateEmployee = () => {
-    connection.query("SELECT * FROM eployee", (err, res) => {
-        if (err) throw err;
-        var newEmployees = res.map(employee => employee.first_name + '' + employee.last_name)
-    })
-
     inquirer
         .prompt([
             {
                 type: 'input',
-                name: 'employeeNew',
+                name: 'first_name',
                 message: "Updating which employee's role?"
                 // choices: viewEmployees
             },
             {
-                type: 'input',
-                name: 'employeeRole',
-                message: 'Update to what?'
+                type: 'number',
+                name: 'role_id',
+                message: 'New role ID?'
                 // choices: viewRoles
             }
         ])
-        .then((answer) => {
+        .then((res) => {
             //new role id moves to first name location
-            connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.employee, answer.employeeRole],
-                (err, res) => {
+            connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.rold_id, answer.first_name],
+                (err, data) => {
                     if (err) throw err;
-                    console.table(res);
+                    console.table(data);
                     anotherChoice();
                 });
         });
