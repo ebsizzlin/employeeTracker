@@ -2,7 +2,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var consoleTable = require("console.table");
-const { join } = require("path");
 
 //creating connection info
 const connection = mysql.createConnection({
@@ -33,11 +32,10 @@ promptUser = () => {
                 "Add department",
                 "Add role",
                 "Add employee",
-                "Update Employee",
+                "Update employee role",
                 "All done!"
             ]
         })
-
         //if and else ifs to go to new functions based off of answer
         .then((answer) => {
             if (answer.choice === 'View departments') {
@@ -52,9 +50,10 @@ promptUser = () => {
                 addRole();
             } else if (answer.choice === 'Add employee') {
                 addEmployee();
-            } else if (answer.choice === 'Update Employee') {
+            } else if (answer.choice === 'Update employee role') {
                 updateEmployee();
             } else if (answer.choice === 'All done!') {
+                console.log("That's a wrap!");
                 connection.end();
             }
         });
@@ -75,8 +74,8 @@ anotherChoice = () =>   {
                 promptUser();
             }
             else {
+                console.log("That's a wrap!");
                 connection.end();
-                console.log('Success!');
             };
         });
 };
@@ -121,26 +120,17 @@ addDepartment = () => {
         .prompt([
             {
                 type: 'input',
-                name: 'name',
+                name: 'department',
                 message: 'Name of the department?'
             }
         ])
-        .then((answer) => {
-            //could i use jquery here?
-            connection.query("INSERT INTO department (department) VALUES (?) ", [answer.name],
-                (err, res) => {
+        .then((res) => {
+            connection.query("INSERT INTO department (name) VALUES (?) ", [res.department],
+                (err, data) => {
                     if (err) throw err;
-                    console.table(res);
-                    console.log("Department added!");
+                    console.table("Department added!");
                     anotherChoice();
                 });
-                
-            // connection.query(query, (err, res) => {
-            //     console.log('Department added!')
-            //     if (err) throw (err);
-            //     console.table(res);
-            //     anotherChoice();
-            // });
         });
 };
 
@@ -151,102 +141,130 @@ addRole = () => {
             {
                 type: 'input',
                 name: 'title',
-                message: 'Name of the role?'
+                message: 'Role title?'
             },
             {
-                type: 'input',
+                type: 'number',
                 name: 'salary',
-                message: 'Salary of role?'
+                message: 'Role salary?'
             },
             {
-                type: 'input',
+                type: 'number',
                 name: 'department_id',
-                message: 'Department ID for role?',
+                message: 'Department ID?',
             }
         ])
-        .then((answer) => {
+        .then((res) => {
             //could i use jquery here?
-            connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?) ", [answer.title, answer.salary, answer.department_id],
-                (err, res) => {
+            connection.query("INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?) ", [res.title, res.salary, res.department_id],
+                (err, data) => {
                     if (err) throw err;
-                    console.table(res);
+                    console.table(data);
                     console.log("Role added!");
                     anotherChoice();
                 });
-                
-                // (res) => {
-                    // var title = res.title;
-                    // var salary = res.salary;
-                    // var department_id = res.department_id;
-                    
-                    // var query = 'INSERT INTO role (title, salary, department_id) VALUES ( ? )';
-                    // connection.query(query, (err, res) => {
-                        //     if (err) throw err;
-                        //     console.table(res);
-                        //     anotherChoice();
-                        // });
-                        // });
         });
 };
 
 //add employees
 addEmployee = () => {
-    inquirer
-        .prompt([
-            {
-                type: 'input',
-                name: 'first_name',
-                message: "Employee's first name?"
-            },
-            {
-                type: 'input',
-                name: 'last_name',
-                message: "Employee's last name?"
-            },
-            {
-                type: 'input',
-                name: 'role_id',
-                message: "Employee's role ID?"
-            },
-            {
-                type: 'input',
-                name: 'manager_id',
-                message: "Employee's manager ID?"
-            }
-        ])
-        .then((answer) => {
-            //could i use jquery here?
-            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.first_name, answer.last_name, answer.role_id, answer.manager_id],
-                (err, res) => {
+    connection.query('SELECT * FROM roles', (err, res) => {
+        if (err) throw err;
+
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'first_name',
+                    message: "Employee's first name?"
+                },
+                {
+                    type: 'input',
+                    name: 'last_name',
+                    message: "Employee's last name?"
+                },
+                {
+                    type: 'list',
+                    name: 'role_id',
+                    message: "Employee's role ID?",
+                    choices: () => {
+                        arrayRole = [];
+                        res.map(res => {
+                            arrayRole.push(
+                                res.title
+                            );
+                        })
+                        return arrayRole;
+                    }
+                },
+            ])
+            .then((answer) => {
+                var role = answer.role;
+                connection.query("SELECT * FROM role", (err, res) => {
+                    if (err) throw (err);
+                    var roleFilter = res.filter((res) => {
+                        return res.title == role;
+                    })
+                    var roldId = roleFilter[0].id;
+                    connection.query("SELECT * FROM employee", (err, res) => {
+                        inquirer
+                            .prompt([
+                                {
+                                    type: 'list',
+                                    name: 'manager_id',
+                                    message: "Which manager?",
+                                    choices: () => {
+                                        arrayManager = []
+                                        res.map(res => {
+                                            arrayManager.push(
+                                                res.last_name
+                                            )
+                                        })
+                                        return arrayManager;
+                                    }
+                                }
+                            ])
+                            .then((answerManager => {
+                                var manager = answerManager.manager;
+                                connection.query("SELECT * FROM employee", (err, res) => {
+                                    if (err) throw (err);
+                                    var managerFilter = res.filter((res) => {
+                                        return res.last_name == manager;
+                                    })
+                                    var managerId = managerFilter[0].id;
+                                    
+                                    var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+                                    var values = [answer.first_name, answer.last_name, role_id, manager_id]
+
+                                    connection.query(query, values, (err, res, fields) => {
+                                        console.log('Employee added: ${(values[0]).toUpperCase()}.')
+                                    })
+                                })
+                            }))
+                    })
+                },
+                (err) => {
                     if (err) throw err;
-                    console.table(res);
                     console.log("Employee added!");
                     anotherChoice();
                 });
-
-            // (res) => {
-            // var first_name = res.first_name;
-            // var last_name = res.last_name;
-            // var role_id = res.role_id;
-            // var manager_id = res.manager_id;
-            
-            // var query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id VALUES ( ? )';
-            // connection.query(query, (err, res) => {
-            //     if (err) throw (err);
-            //     console.table(res);
-            //     anotherChoice();
-            // });
-        });
+            });
+    });
 };
 
 //update employees -- this doesnt feel complete
 updateEmployee = () => {
+    connection.query("SELECT * FROM eployee", (err, res) => {
+        if (err) throw err;
+        var newEmployees = res.map(employee => employee.first_name + '' + employee.last_name)
+    })
+
     inquirer
         .prompt([
             {
                 type: 'input',
-                name: 'employee',
-                message: 'Updating which employee?'
+                name: 'employeeNew',
+                message: "Updating which employee's role?"
                 // choices: viewEmployees
             },
             {
@@ -265,10 +283,4 @@ updateEmployee = () => {
                     anotherChoice();
                 });
         });
-
-    // var query = 'SELECT id, first_name, last_name, role_id FROM employee';
-    // connection.query(query, (err, res) => {
-    //     if (err) throw err;
-    //     console.table(res);
-    // });
 };
