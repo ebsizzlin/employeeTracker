@@ -203,7 +203,7 @@ addEmployee = () => {
             });
 };
 
-//update employees -- this doesnt feel complete
+//update employees -- this is just changing role_id to null
 updateEmployee = () => {
     inquirer
         .prompt([
@@ -211,26 +211,18 @@ updateEmployee = () => {
                 type: 'input',
                 name: 'first_name',
                 message: "Updating which employee's role?",
-                choices: () => {
-                    arrayEmployee = [];
-                    res.map(res => {
-                        arrayEmployee.push(
-                            res.title
-                        );
-                    })
-                    return arrayEmployee;
-                }
+                //choices cycle?
             },
             {
                 type: 'number',
                 name: 'role_id',
                 message: 'New role ID?'
-                // choices: viewRoles
+                //choices cycle?
             }
         ])
         .then((res) => {
             //new role id moves to first name location
-            connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [answer.rold_id, answer.first_name],
+            connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [res.rold_id, res.first_name],
                 (err, data) => {
                     if (err) throw err;
                     console.table(data);
@@ -238,3 +230,12 @@ updateEmployee = () => {
                 });
         });
 };
+
+//way to cycle?
+            // arrayEmployee = [];
+            // res.map(res => {
+            //     arrayEmployee.push(
+            //         res.title
+            //     );
+            // })
+            // return arrayEmployee;
