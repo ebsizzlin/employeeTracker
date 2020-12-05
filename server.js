@@ -59,6 +59,8 @@ promptUser = () => {
         });
 };
 
+//how to add 'EMPLOYEE TRACKER' graphic?
+
 //ask if user wants to select something else -- does this work???
 anotherChoice = () =>   {
     inquirer
@@ -109,10 +111,6 @@ viewEmployees = () => {
         anotherChoice();
     });
 };
-
-// ==============
-// currently under the assumption that my .then operations don't work, will likely have correct update after 12/4 tutoring session
-// ==============
 
 //add departments
 addDepartment = () => {
